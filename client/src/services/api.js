@@ -1,8 +1,10 @@
 import axios from 'axios';
 
-// Create configured axios instance
+// Use environment variable if provided, else fallback to relative /api
+const baseURL = import.meta.env.VITE_API_BASE_URL || '/api';
+
 const api = axios.create({
-  baseURL: '/api',
+  baseURL: baseURL,
   headers: {
     'Content-Type': 'application/json',
   },
@@ -29,13 +31,9 @@ api.interceptors.request.use(
   }
 );
 
-// Interceptor to handle unauthenticated 401 errors globally
 api.interceptors.response.use(
   (response) => response,
   (error) => {
-    if (error.response && error.response.status === 401) {
-      // Optional: automatically redirect if token expires
-    }
     return Promise.reject(error);
   }
 );
