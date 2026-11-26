@@ -6,15 +6,27 @@ const connectDB = require('./config/db');
 // Load environment variables
 dotenv.config();
 
-// Connect to MongoDB
-connectDB();
-
 const app = express();
 
 // Middleware
 app.use(cors());
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
+
+// Ensure database is connected before handling any API request (critical for serverless)
+app.use(async (req, res, next) => {
+  try {
+    await connectDB();
+    next();
+  } catch (error) {
+    console.error('Database connection error in request middleware:', error.message);
+    res.status(500).json({
+      success: false,
+      message: 'Database connection failed. Please verify MONGODB_URI and IP whitelist in Atlas.',
+      error: error.message,
+    });
+  }
+});
 
 // Welcome / health check route
 app.get('/', (req, res) => {
