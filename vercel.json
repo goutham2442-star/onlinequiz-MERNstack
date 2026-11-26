@@ -1,26 +1,22 @@
 {
-  "version": 2,
-  "builds": [
-    {
-      "src": "api/index.js",
-      "use": "@vercel/node"
+  "$schema": "https://openapi.vercel.sh/vercel.json",
+  "services": {
+    "client": {
+      "rootDirectory": "client",
+      "framework": "vite"
     },
-    {
-      "src": "client/package.json",
-      "use": "@vercel/static-build",
-      "config": {
-        "distDir": "dist"
-      }
+    "server": {
+      "rootDirectory": "server"
     }
-  ],
+  },
   "routes": [
     {
       "src": "/api/(.*)",
-      "dest": "api/index.js"
+      "service": "server"
     },
     {
       "src": "/(.*)",
-      "dest": "client/$1"
+      "service": "client"
     }
   ]
 }
