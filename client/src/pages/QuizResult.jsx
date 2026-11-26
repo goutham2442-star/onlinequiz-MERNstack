@@ -28,15 +28,15 @@ const QuizResult = () => {
     return (
       <div className="spinner-container">
         <div className="spinner"></div>
-        <p>Loading result summary...</p>
+        <p>Generating your performance breakdown...</p>
       </div>
     );
   }
 
   if (error || !result) {
     return (
-      <div style={{ maxWidth: '600px', margin: '3rem auto', padding: '0 1rem' }}>
-        <div className="alert alert-danger">{error || 'Result not found'}</div>
+      <div style={{ maxWidth: '640px', margin: '4rem auto', padding: '0 1rem' }}>
+        <div className="alert alert-danger" style={{ borderRadius: '16px' }}>{error || 'Result not found'}</div>
         <Link to="/dashboard" className="btn btn-secondary">
           &larr; Back to Dashboard
         </Link>
@@ -47,79 +47,141 @@ const QuizResult = () => {
   const isPassed = result.percentage >= 50;
 
   return (
-    <div style={{ maxWidth: '960px', margin: '2rem auto', padding: '0 1.25rem' }}>
-      {/* Result Hero Card */}
+    <div style={{ maxWidth: '1020px', margin: '2.5rem auto', padding: '0 1.5rem' }}>
+      {/* Result Hero Banner */}
       <div
         className="card"
         style={{
           textAlign: 'center',
-          padding: '3rem 2rem',
-          borderRadius: '24px',
+          padding: '3.5rem 2rem',
+          borderRadius: '32px',
           background: isPassed
-            ? 'linear-gradient(135deg, #065f46 0%, #047857 100%)'
-            : 'linear-gradient(135deg, #991b1b 0%, #b91c1c 100%)',
+            ? 'linear-gradient(135deg, #064e3b 0%, #065f46 50%, #047857 100%)'
+            : 'linear-gradient(135deg, #881337 0%, #9f1239 50%, #be123c 100%)',
           color: '#ffffff',
-          marginBottom: '2rem',
-          boxShadow: '0 15px 25px -5px rgba(0, 0, 0, 0.15)',
+          marginBottom: '2.5rem',
+          boxShadow: 'var(--shadow-xl)',
+          border: '1px solid rgba(255, 255, 255, 0.15)',
         }}
       >
-        <span style={{ fontSize: '3.5rem' }}>{isPassed ? '🏆' : '📚'}</span>
-        <h1 style={{ fontFamily: 'var(--font-heading)', fontSize: '2.25rem', marginTop: '0.5rem', marginBottom: '0.25rem' }}>
-          {isPassed ? 'Congratulations!' : 'Good Effort! Keep Learning.'}
+        <span style={{ fontSize: '4.5rem', display: 'inline-block', marginBottom: '0.75rem' }}>
+          {isPassed ? '🏆' : '📚'}
+        </span>
+        <h1
+          style={{
+            fontFamily: 'var(--font-heading)',
+            fontSize: '2.5rem',
+            fontWeight: 800,
+            letterSpacing: '-0.02em',
+            marginBottom: '0.5rem',
+          }}
+        >
+          {isPassed ? 'Outstanding Performance!' : 'Assessment Concluded'}
         </h1>
-        <p style={{ color: 'rgba(255, 255, 255, 0.9)', fontSize: '1.05rem', marginBottom: '2rem' }}>
-          You completed the quiz: <strong>{result.quiz?.title || 'Online Assessment'}</strong>
+        <p style={{ color: 'rgba(255, 255, 255, 0.9)', fontSize: '1.15rem', marginBottom: '2.5rem' }}>
+          Completed: <strong>{result.quiz?.title || 'Academic Assessment'}</strong>
         </p>
 
-        {/* Stats Strip */}
+        {/* 4 Score Badges Strip */}
         <div
           style={{
             display: 'grid',
-            gridTemplateColumns: 'repeat(auto-fit, minmax(130px, 1fr))',
-            gap: '1rem',
-            maxWidth: '650px',
+            gridTemplateColumns: 'repeat(auto-fit, minmax(140px, 1fr))',
+            gap: '1.25rem',
+            maxWidth: '720px',
             margin: '0 auto',
           }}
         >
-          <div style={{ background: 'rgba(255, 255, 255, 0.15)', padding: '1rem', borderRadius: '12px' }}>
-            <div style={{ fontSize: '1.75rem', fontWeight: '800' }}>{result.score} / {result.totalQuestions}</div>
-            <div style={{ fontSize: '0.75rem', textTransform: 'uppercase', opacity: 0.85 }}>Total Marks</div>
+          <div
+            style={{
+              background: 'rgba(255, 255, 255, 0.15)',
+              backdropFilter: 'blur(8px)',
+              padding: '1.25rem',
+              borderRadius: '20px',
+              border: '1px solid rgba(255, 255, 255, 0.2)',
+            }}
+          >
+            <div style={{ fontSize: '2.2rem', fontWeight: '800' }}>
+              {result.score} / {result.totalQuestions}
+            </div>
+            <div style={{ fontSize: '0.75rem', textTransform: 'uppercase', letterSpacing: '0.06em', opacity: 0.85, marginTop: '0.2rem' }}>
+              Total Marks
+            </div>
           </div>
 
-          <div style={{ background: 'rgba(255, 255, 255, 0.15)', padding: '1rem', borderRadius: '12px' }}>
-            <div style={{ fontSize: '1.75rem', fontWeight: '800' }}>{result.percentage}%</div>
-            <div style={{ fontSize: '0.75rem', textTransform: 'uppercase', opacity: 0.85 }}>Percentage</div>
+          <div
+            style={{
+              background: 'rgba(255, 255, 255, 0.15)',
+              backdropFilter: 'blur(8px)',
+              padding: '1.25rem',
+              borderRadius: '20px',
+              border: '1px solid rgba(255, 255, 255, 0.2)',
+            }}
+          >
+            <div style={{ fontSize: '2.2rem', fontWeight: '800' }}>{result.percentage}%</div>
+            <div style={{ fontSize: '0.75rem', textTransform: 'uppercase', letterSpacing: '0.06em', opacity: 0.85, marginTop: '0.2rem' }}>
+              Accuracy Grade
+            </div>
           </div>
 
-          <div style={{ background: 'rgba(255, 255, 255, 0.15)', padding: '1rem', borderRadius: '12px' }}>
-            <div style={{ fontSize: '1.75rem', fontWeight: '800', color: '#a7f3d0' }}>{result.correctAnswers}</div>
-            <div style={{ fontSize: '0.75rem', textTransform: 'uppercase', opacity: 0.85 }}>Correct</div>
+          <div
+            style={{
+              background: 'rgba(255, 255, 255, 0.15)',
+              backdropFilter: 'blur(8px)',
+              padding: '1.25rem',
+              borderRadius: '20px',
+              border: '1px solid rgba(255, 255, 255, 0.2)',
+            }}
+          >
+            <div style={{ fontSize: '2.2rem', fontWeight: '800', color: '#6ee7b7' }}>
+              {result.correctAnswers}
+            </div>
+            <div style={{ fontSize: '0.75rem', textTransform: 'uppercase', letterSpacing: '0.06em', opacity: 0.85, marginTop: '0.2rem' }}>
+              Correct
+            </div>
           </div>
 
-          <div style={{ background: 'rgba(255, 255, 255, 0.15)', padding: '1rem', borderRadius: '12px' }}>
-            <div style={{ fontSize: '1.75rem', fontWeight: '800', color: '#fecaca' }}>{result.incorrectAnswers}</div>
-            <div style={{ fontSize: '0.75rem', textTransform: 'uppercase', opacity: 0.85 }}>Incorrect</div>
+          <div
+            style={{
+              background: 'rgba(255, 255, 255, 0.15)',
+              backdropFilter: 'blur(8px)',
+              padding: '1.25rem',
+              borderRadius: '20px',
+              border: '1px solid rgba(255, 255, 255, 0.2)',
+            }}
+          >
+            <div style={{ fontSize: '2.2rem', fontWeight: '800', color: '#fca5a5' }}>
+              {result.incorrectAnswers}
+            </div>
+            <div style={{ fontSize: '0.75rem', textTransform: 'uppercase', letterSpacing: '0.06em', opacity: 0.85, marginTop: '0.2rem' }}>
+              Incorrect
+            </div>
           </div>
         </div>
       </div>
 
-      {/* Navigation action bar */}
+      {/* Action Header */}
       <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '2rem' }}>
-        <h2 style={{ fontFamily: 'var(--font-heading)', fontSize: '1.4rem' }}>
-          Detailed Answer Breakdown ({result.selectedAnswers?.length || 0})
-        </h2>
+        <div>
+          <h2 style={{ fontFamily: 'var(--font-heading)', fontSize: '1.6rem', fontWeight: 800 }}>
+            Question-by-Question Solution Breakdown
+          </h2>
+          <p style={{ color: 'var(--text-muted)', fontSize: '0.925rem' }}>
+            Compare your selections against verified correct options
+          </p>
+        </div>
         <div style={{ display: 'flex', gap: '0.75rem' }}>
           <Link to="/dashboard" className="btn btn-secondary">
-            &larr; Back to Dashboard
+            &larr; Dashboard
           </Link>
           <Link to="/my-results" className="btn btn-primary">
-            View All My Results
+            Past Results
           </Link>
         </div>
       </div>
 
-      {/* Detailed Question Review List */}
-      <div style={{ display: 'flex', flexDirection: 'column', gap: '1.25rem', marginBottom: '3rem' }}>
+      {/* Questions Solution List */}
+      <div style={{ display: 'flex', flexDirection: 'column', gap: '1.5rem', marginBottom: '3.5rem' }}>
         {result.selectedAnswers?.map((ans, idx) => {
           const q = ans.question;
           const isCorrect = ans.isCorrect;
@@ -130,68 +192,73 @@ const QuizResult = () => {
               key={idx}
               className="card"
               style={{
-                borderLeft: isCorrect ? '5px solid var(--success)' : '5px solid var(--danger)',
-                padding: '1.5rem',
+                borderRadius: '20px',
+                borderLeft: isCorrect ? '6px solid var(--success)' : '6px solid var(--danger)',
+                padding: '2rem',
+                background: '#ffffff',
               }}
             >
-              <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '0.75rem' }}>
-                <span className="badge badge-muted">Question #{idx + 1}</span>
+              <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '1rem' }}>
+                <span className="badge badge-muted" style={{ fontFamily: 'var(--font-mono)' }}>
+                  QUESTION {idx + 1}
+                </span>
                 {isCorrect ? (
-                  <span className="badge badge-success">✓ Correct (+1)</span>
+                  <span className="badge badge-success">✓ Correct (+1 Mark)</span>
                 ) : (
-                  <span className="badge badge-danger">✗ Incorrect (0)</span>
+                  <span className="badge badge-danger">✗ Incorrect (0 Marks)</span>
                 )}
               </div>
 
-              <h4 style={{ fontSize: '1.1rem', marginBottom: '1rem' }}>
+              <h4 style={{ fontFamily: 'var(--font-heading)', fontSize: '1.25rem', fontWeight: 700, marginBottom: '1.25rem', lineHeight: 1.4 }}>
                 {q?.questionText || 'Question item'}
               </h4>
 
-              {/* Options list showing what student picked vs correct */}
-              <div style={{ display: 'flex', flexDirection: 'column', gap: '0.5rem', marginBottom: '1rem' }}>
+              {/* Options */}
+              <div style={{ display: 'flex', flexDirection: 'column', gap: '0.65rem', marginBottom: '1.25rem' }}>
                 {q?.options?.map((opt, optIdx) => {
                   const isSelectedByStudent = ans.selectedOption === opt;
                   const isTheCorrectAnswer = ans.correctOption === opt;
 
                   let optBg = '#ffffff';
-                  let optBorder = '1px solid var(--border-color)';
+                  let optBorder = '1px solid var(--border-subtle)';
                   let optColor = 'var(--text-main)';
 
                   if (isTheCorrectAnswer) {
                     optBg = 'var(--success-bg)';
                     optBorder = '1.5px solid var(--success)';
-                    optColor = '#065f46';
+                    optColor = 'var(--success-text)';
                   } else if (isSelectedByStudent && !isCorrect) {
                     optBg = 'var(--danger-bg)';
                     optBorder = '1.5px solid var(--danger)';
-                    optColor = '#991b1b';
+                    optColor = 'var(--danger-text)';
                   }
 
                   return (
                     <div
                       key={optIdx}
                       style={{
-                        padding: '0.65rem 1rem',
-                        borderRadius: 'var(--radius-md)',
+                        padding: '0.85rem 1.25rem',
+                        borderRadius: '12px',
                         backgroundColor: optBg,
                         border: optBorder,
                         color: optColor,
-                        fontSize: '0.925rem',
+                        fontSize: '0.95rem',
                         display: 'flex',
                         justifyContent: 'space-between',
                         alignItems: 'center',
+                        fontWeight: isTheCorrectAnswer || isSelectedByStudent ? 700 : 500,
                       }}
                     >
                       <span>
                         <strong>{String.fromCharCode(65 + optIdx)}.</strong> {opt}
                       </span>
                       {isSelectedByStudent && (
-                        <span style={{ fontSize: '0.8rem', fontWeight: '700' }}>
+                        <span style={{ fontSize: '0.8rem', fontWeight: '800' }}>
                           (Your Selection)
                         </span>
                       )}
                       {isTheCorrectAnswer && !isSelectedByStudent && (
-                        <span style={{ fontSize: '0.8rem', fontWeight: '700', color: 'var(--success)' }}>
+                        <span style={{ fontSize: '0.8rem', fontWeight: '800', color: 'var(--success)' }}>
                           (Correct Answer)
                         </span>
                       )}
@@ -201,8 +268,8 @@ const QuizResult = () => {
               </div>
 
               {!hasAnswered && (
-                <div style={{ fontSize: '0.85rem', color: 'var(--danger)', fontWeight: 600 }}>
-                  ⚠️ You skipped this question.
+                <div style={{ fontSize: '0.875rem', color: 'var(--danger)', fontWeight: 700, marginBottom: '0.75rem' }}>
+                  ⚠️ You skipped answering this question.
                 </div>
               )}
 
@@ -210,14 +277,14 @@ const QuizResult = () => {
                 <div
                   style={{
                     backgroundColor: 'var(--bg-muted)',
-                    padding: '0.75rem 1rem',
-                    borderRadius: 'var(--radius-sm)',
-                    fontSize: '0.875rem',
-                    color: 'var(--text-muted)',
-                    marginTop: '0.5rem',
+                    padding: '1rem 1.25rem',
+                    borderRadius: '12px',
+                    fontSize: '0.9rem',
+                    color: 'var(--text-secondary)',
+                    lineHeight: 1.5,
                   }}
                 >
-                  💡 <strong>Explanation:</strong> {q.explanation}
+                  💡 <strong>Instructor Note:</strong> {q.explanation}
                 </div>
               )}
             </div>
